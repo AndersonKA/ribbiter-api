@@ -20,3 +20,5 @@ const Route = use('Route')
 Route.on('/').render('welcome')
 
 Route.post('/users', 'UserController.store');
+Route.get('/users', 'UserController.index');
+Route.post('/login', 'UserController.login');
