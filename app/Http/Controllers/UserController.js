@@ -8,7 +8,7 @@ class UserController {
   * index(request, response) {
     const users = yield User.all();
 
-    respond.send(users);
+    response.send(users);
   }
 
   * create(request, response) {
@@ -22,10 +22,10 @@ class UserController {
   }
 
   * login(request, response) {
-  const { username, password } = request.only('username', 'password');
+    const { username, password } = request.only('username', 'password');
 
-  const user = yield User.query().where({ username }).firstOrFail();
-  const isValid = yield Hash.verify(password, user.password);
+    const user = yield User.query().where({ username }).firstOrFail();
+    const isValid = yield Hash.verify(password, user.password);
 
   if (!isValid) {
     return response.status(401).json({
@@ -33,9 +33,7 @@ class UserController {
     });
   }
 
-  // create a special passcode for the user (called a token)
   const token = yield request.auth.generate(user);
-  // send the token to the user
   response.json({ token });
 }
 
